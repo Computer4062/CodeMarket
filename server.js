@@ -78,7 +78,7 @@ app.post('/pay', async (req, res) => {
     const css = req.body.css
     const js = req.body.js
 	const Stripe = stripe(req.body.APIkey)
-    const url = "https://codemarket.onrender.com/payment/success" + querystring.stringify({query:`/${html}/${css}/${js}`})
+    const url = "https://clear-buckle-fly.cyclic.app/payment/success" + querystring.stringify({query:`/${html}/${css}/${js}`})
     const session = await Stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items: [
@@ -96,7 +96,7 @@ app.post('/pay', async (req, res) => {
         ],
         mode: "payment",
         success_url: url,
-        cancel_url: "https://codemarket.onrender.com/payment/cancel"
+        cancel_url: "https://clear-buckle-fly.cyclic.app/payment/cancel"
       });
       res.send(session.url)
 });
