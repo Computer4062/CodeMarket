@@ -96,7 +96,7 @@ app.post('/pay', async (req, res) => {
         ],
         mode: "payment",
         success_url: url,
-        cancel_url: "http://codemarket.onrender.com/payment/cancel"
+        cancel_url: "https://codemarket.onrender.com/payment/cancel"
       });
       res.send(session.url)
 });
