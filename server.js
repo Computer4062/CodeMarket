@@ -11,6 +11,8 @@ const stripe = require('stripe')
 require('dotenv').config()
 const querystring = require('querystring')
 const path = require("path")
+const Comments = require("./model/Comments")
+const CommentC = require("./routes/Comments")
 
 mongoose.connect("mongodb+srv://CodeMarket:codemarketccodemarket@cluster0.sugg1ez.mongodb.net/codemarket?retryWrites=true&w=majority", {
     useNewUrlParser: true,
@@ -54,11 +56,20 @@ app.get("/found/name/:category", async(req, res) => {
 
 app.get("/acc/find/:username/:password", async(req, res) => {
     try{
-        const product = await Accounts.find({username: req.params.username}, {userpassword: req.params.password})
-        res.status(200).send(product)
+        const acc = await Accounts.find({username: req.params.username}, {userpassword: req.params.password})
+        res.status(200).send(acc)
     }catch(error){
         res.status(404).send("Account was not found")
         console.log(error)
+    }
+})
+
+app.get("/comment/find/:name", async(req, res) => {
+    try{
+        const comments = await Comments.find({name: req.params.name})
+        res.status(200).send(comments)
+    }catch(error){
+        res.status(404).send(error)
     }
 })
 
@@ -92,6 +103,7 @@ app.post('/pay', async (req, res) => {
 
 app.use('/code', code)
 app.use('/acc', register)
+app.use('/comment', CommentC)
 
 app.use(express.static(path.join(__dirname, "./client/build")));
 
