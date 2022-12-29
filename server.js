@@ -98,11 +98,7 @@ app.post('/pay', async (req, res) => {
         ],
         mode: "payment",
         success_url: url,
-<<<<<<< HEAD
-        cancel_url: "http://codemarket.onrender.com/payment/cancel"
-=======
         cancel_url: "https://clear-buckle-fly.cyclic.app/payment/cancel"
->>>>>>> c118ef19441fe2bee2196253d78529c96c3712ca
       });
       res.send(session.url)
 });
@@ -138,9 +134,6 @@ app.use('/code', code)
 app.use('/acc', register)
 app.use('/comment', CommentC)
 
-<<<<<<< HEAD
-app.listen(5000)
-=======
 app.use(express.static(path.join(__dirname, "./client/build")));
 
 app.get("*", function (req, res) {
@@ -148,4 +141,3 @@ app.get("*", function (req, res) {
 });
 
 app.listen(5000)
->>>>>>> c118ef19441fe2bee2196253d78529c96c3712ca
