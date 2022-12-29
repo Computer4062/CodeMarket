@@ -14,6 +14,8 @@ const path = require("path")
 const Comments = require("./model/Comments")
 const CommentC = require("./routes/Comments")
 
+mongoose.set('strictQuery', true)
+
 mongoose.connect("mongodb+srv://CodeMarket:codemarketccodemarket@cluster0.sugg1ez.mongodb.net/codemarket?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -96,19 +98,40 @@ app.post('/pay', async (req, res) => {
         ],
         mode: "payment",
         success_url: url,
-        cancel_url: "https://codemarket.onrender.com/payment/cancel"
+        cancel_url: "http://codemarket.onrender.com/payment/cancel"
       });
       res.send(session.url)
 });
 
+app.get("/get/:username", async(req, res) => {
+    try{
+        const acc = await Accounts.find({username: req.params.username})
+        res.status(200).send(acc)
+    }catch(error){
+        res.status(404).send("Could not find username")
+    }
+})
+
+app.get("/get/code/:username", async(req, res) => {
+    try{
+        const code = await codes.find({username: req.params.username})
+        res.status(200).send(code)
+    }catch(error){
+        res.status(404).send("Could not find code")
+    }
+})
+
+app.post("/code/delete", async(req, res) => {
+    try{
+        await codes.findByIdAndDelete({_id: req.body._id})
+        res.status(201).json("product deleted")
+    }catch(error){
+        res.status(404).send("Error")
+    }
+})
+
 app.use('/code', code)
 app.use('/acc', register)
 app.use('/comment', CommentC)
-
-app.use(express.static(path.join(__dirname, "./client/build")));
-
-app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
 
 app.listen(5000)

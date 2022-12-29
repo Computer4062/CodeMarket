@@ -7,7 +7,6 @@ const create = async(req, res) => {
         res.status(200).send("account created")
     }catch(error){
         res.status(404).send(error)
-        console.log(error)
     }
 }
 
