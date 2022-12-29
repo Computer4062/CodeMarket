@@ -80,7 +80,7 @@ app.post('/pay', async (req, res) => {
     const css = req.body.css
     const js = req.body.js
 	const Stripe = stripe(req.body.APIkey)
-    const url = "https://codemarket.onrender.com/payment/success" + querystring.stringify({query:`/${html}/${css}/${js}`})
+    const url = "https://clear-buckle-fly.cyclic.app/payment/success" + querystring.stringify({query:`/${html}/${css}/${js}`})
     const session = await Stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items: [
@@ -98,7 +98,11 @@ app.post('/pay', async (req, res) => {
         ],
         mode: "payment",
         success_url: url,
+<<<<<<< HEAD
         cancel_url: "http://codemarket.onrender.com/payment/cancel"
+=======
+        cancel_url: "https://clear-buckle-fly.cyclic.app/payment/cancel"
+>>>>>>> c118ef19441fe2bee2196253d78529c96c3712ca
       });
       res.send(session.url)
 });
@@ -134,4 +138,14 @@ app.use('/code', code)
 app.use('/acc', register)
 app.use('/comment', CommentC)
 
+<<<<<<< HEAD
 app.listen(5000)
+=======
+app.use(express.static(path.join(__dirname, "./client/build")));
+
+app.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
+app.listen(5000)
+>>>>>>> c118ef19441fe2bee2196253d78529c96c3712ca
