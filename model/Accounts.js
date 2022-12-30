@@ -10,11 +10,6 @@ const accounts = mongoose.Schema({
         type: String,
         required: true
     },
-    email:{
-        type: String,
-        required: true,
-        unique: true
-    },
     profile:{
         type: String,
         required: true,
