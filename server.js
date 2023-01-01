@@ -16,7 +16,7 @@ const CommentC = require("./routes/Comments")
 
 mongoose.set('strictQuery', true)
 
-mongoose.connect("mongodb+srv://CodeMarket:codemarketccodemarket@cluster0.sugg1ez.mongodb.net/codemarket?retryWrites=true&w=majority", {
+mongoose.connect(process.env.MONGOURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -80,7 +80,7 @@ app.post('/pay', async (req, res) => {
     const css = req.body.css
     const js = req.body.js
 	const Stripe = stripe(req.body.APIkey)
-    const url = "https://clear-buckle-fly.cyclic.app/payment/success" + querystring.stringify({query:`/${html}/${css}/${js}`})
+    const url = "https://codemarket.ml/payment/success" + querystring.stringify({query:`/${html}/${css}/${js}`})
     const session = await Stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items: [
@@ -98,7 +98,7 @@ app.post('/pay', async (req, res) => {
         ],
         mode: "payment",
         success_url: url,
-        cancel_url: "https://clear-buckle-fly.cyclic.app/payment/cancel"
+        cancel_url: "https://www.codemarket.ml/payment/cancel"
       });
       res.send(session.url)
 });
